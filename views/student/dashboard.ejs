@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+
+<div class="container">
+  <aside class="sidebar">
+    <h2>Student</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/jobs">Browse Jobs</a>
+    <a href="/my-applications">My Applications</a>
+    <a href="/logout">Logout</a>
+  </aside>
+
+  <main class="main">
+    <h1>Welcome, <%= user.name %></h1>
+
+    <div class="stats">
+      <div class="card">Jobs Available <span><%= totalJobs %></span></div>
+      <div class="card">Applied <span><%= totalApplied %></span></div>
+      <div class="card">Shortlisted <span><%= shortlisted %></span></div>
+      <div class="card">Rejected <span><%= rejected %></span></div>
+    </div>
+
+    <h3 style="margin-top:30px;">Recent Applications</h3>
+
+    <% if(applications.length === 0) { %>
+      <p>No applications yet</p>
+    <% } %>
+
+    <% applications.forEach(app => { %>
+      <div class="job-card">
+        <h4><%= app.job.title %></h4>
+        <p><%= app.job.company %> | <%= app.job.location %></p>
+        <p>Status: <b><%= app.status %></b></p>
+      </div>
+    <% }) %>
+  </main>
+</div>
+
+</body>
+</html>

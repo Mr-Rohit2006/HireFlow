@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Applicants</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+
+  <style>
+.btn { padding: 6px 12px; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; margin-right: 6px; }
+.shortlist { background: #2ecc71; color: white; }
+.reject { background: #e74c3c; color: white; }
+.mail { background: #6c5ce7; color: white; text-decoration: none; }
+</style>
+</head>
+
+<body>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Recruiter</h2>
+      <a href="/recruiter/dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+    </aside>
+
+    <main class="main">
+      <h1>Applicants for <%= job.title %>
+      </h1>
+
+      <% if (applications.length===0) { %>
+        <p>No applications yet.</p>
+        <% } %>
+
+          <% applications.forEach(app=> { %>
+            <div class="job-card">
+              <h3>
+                <%= app.student.name %>
+              </h3>
+              <p>Email: <%= app.student.email %>
+              </p>
+
+              <p>
+                Status:
+                <b>
+                  <%= app.status %>
+                </b>
+              </p>
+
+              <!-- STATUS UPDATE FORM -->
+              <form method="POST" action="/recruiter/application/update" style="display:inline;">
+                <input type="hidden" name="applicationId" value="<%= app._id %>">
+                <input type="hidden" name="jobId" value="<%= job._id %>">
+
+                <button class="btn shortlist" name="status" value="Shortlisted">
+                  Shortlist
+                </button>
+
+                <button class="btn reject" name="status" value="Rejected">
+                  Reject
+                </button>
+              </form>
+
+              <!-- MAILTO LINK -->
+              <a class="btn mail" href="mailto:<%= app.student.email %>
+                ?subject=<%= encodeURIComponent('Shortlisted for ' + job.title) %>
+                &body=<%= encodeURIComponent(
+                    'Hi ' + app.student.name + '\n\n' +
+              'Congratulations!\n' +
+                'You have been shortlisted for the position of ' +
+                job.title + ' at ' + job.company + '.\n\n' +
+                'Next steps:\n' +
+                'Interview details will be shared soon.\n\n' +
+                'Regards,\n' +
+                  user.name + '\nRecruiter – ' + job.company
+                  ) %>">
+                Send Mail
+              </a>
+
+
+            </div>
+            <% }) %>
+    </main>
+  </div>
+
+</body>
+
+</html>

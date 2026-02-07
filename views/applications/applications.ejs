@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Applications</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+
+  <style>
+    details {
+      margin-top: 10px;
+      background: #f7f7f7;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #6c5ce7;
+      outline: none;
+    }
+
+    .status {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: white;
+    }
+    .Pending { background: #f1c40f; }
+    .Shortlisted { background: #2ecc71; }
+    .Rejected { background: #e74c3c; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <aside class="sidebar">
+    <h2>Student</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/jobs">Browse Jobs</a>
+    <a href="/my-applications">My Applications</a>
+    <a href="/logout">Logout</a>
+  </aside>
+
+  <main class="main">
+    <h1>My Applications</h1>
+
+    <% if (applications.length === 0) { %>
+      <p>You have not applied to any jobs yet.</p>
+    <% } %>
+
+    <% applications.forEach(app => { %>
+      <div class="job-card">
+        <h3><%= app.job.title %></h3>
+        <p><b>Company:</b> <%= app.job.company %></p>
+        <p><b>Location:</b> <%= app.job.location %></p>
+
+        <p>
+          <b>Status:</b>
+          <span class="status <%= app.status %>"><%= app.status %></span>
+        </p>
+
+        <!-- 🔥 GUARANTEED VIEW DETAILS -->
+        <details>
+          <summary>View Job Details</summary>
+          <p><b>Job Type:</b> <%= app.job.jobType || "N/A" %></p>
+          <p><b>Salary:</b> <%= app.job.salary || "Not disclosed" %></p>
+          <p><b>Description:</b></p>
+          <p><%= app.job.description %></p>
+        </details>
+      </div>
+    <% }) %>
+  </main>
+</div>
+
+</body>
+</html>

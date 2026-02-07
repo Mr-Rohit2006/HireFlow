@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jobs</title>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    .details {
+      display: none;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+    .toggle-btn {
+      margin-top: 8px;
+      background: #6c5ce7;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Available Jobs</h2>
+
+<div class="job-grid">
+  <% jobs.forEach((job, index) => { %>
+    <div class="job-card">
+      <h3><%= job.title %></h3>
+      <p><b>Company:</b> <%= job.company %></p>
+      <small><b>Location:</b> <%= job.location %></small>
+
+      <br>
+
+      <!-- VIEW DETAILS BUTTON -->
+      <button class="toggle-btn" onclick="toggleDetails(<%= index %>)">
+        View Details
+      </button>
+
+      <!-- HIDDEN DETAILS -->
+      <div class="details" id="details-<%= index %>">
+        <p><b>Job Type:</b> <%= job.jobType || "N/A" %></p>
+        <p><b>Salary:</b> <%= job.salary || "Not disclosed" %></p>
+        <p><b>Description:</b></p>
+        <p><%= job.description %></p>
+      </div>
+
+<form 
+  action="/apply/<%= job._id %>" 
+  method="POST" 
+  enctype="multipart/form-data"
+>
+  <input type="file" name="resume" accept=".pdf" required>
+  <button type="submit">Apply</button>
+</form>    </div>
+  <% }) %>
+</div>
+
+<br>
+<a href="/dashboard">Back to Dashboard</a>
+
+<script>
+  function toggleDetails(index) {
+    const box = document.getElementById("details-" + index);
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  }
+</script>
+
+</body>
+</html>

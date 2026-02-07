@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Recruiter Dashboard</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+
+<div class="container">
+  <aside class="sidebar">
+    <h2>Recruiter</h2>
+    <a href="/recruiter/dashboard">Dashboard</a>
+    <a href="/post-job">Post Job</a>
+    <a href="/logout">Logout</a>
+  </aside>
+
+  <main class="main">
+    <h1>Hello, <%= user.name %></h1>
+
+    <div class="stats">
+      <div class="card">Jobs Posted <span><%= totalJobs %></span></div>
+      <div class="card">Applications <span><%= totalApplications %></span></div>
+    </div>
+
+    <h3>Your Jobs</h3>
+    <ul>
+  <% jobs.forEach(job => { %>
+    <li>
+      <%= job.title %> - <%= job.location %>
+      |
+      <a href="/recruiter/job/<%= job._id %>/applicants">
+        View Applicants
+      </a>
+    </li>
+  <% }) %>
+</ul>
+
+  </main>
+</div>
+
+</body>
+</html>
