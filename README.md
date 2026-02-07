@@ -53,3 +53,14 @@ HireFlow is a full-stack Job & Recruitment Portal designed to streamline the hir
 
 ## 📂 Project Structure
 
+HireFlow/
+│── config/          # Database configuration
+│── middleware/      # Authentication middleware
+│── routes/          # Application routes
+│── models/          # Database models
+│── views/           # EJS templates
+│── public/          # Static files (CSS, JS)
+│── uploads/         # Uploaded resumes
+│── app.js           # Application entry point
+│── package.json
+│── README.md
