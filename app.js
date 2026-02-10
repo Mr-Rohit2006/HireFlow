@@ -30,8 +30,6 @@ app.get("/dashboard", isAuth, (req, res) => {
 // console.log(process.env.MAIL_USER);
 // console.log(process.env.MAIL_PASS);
 
-app.listen(3000, (err) => {
-  if(err) console.log(err);
-  console.log("Server running on port 3000");
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Server running"));
 
