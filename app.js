@@ -1,6 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 require("dotenv").config();
+app.set("trust proxy", 1);
 
 const connectDB = require("./config/db");
 connectDB(); 
@@ -14,7 +15,11 @@ app.use("/uploads", express.static("uploads"));
 app.use(session({
   secret: "secret123",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+  secure: false
+  }
+
 }));
 app.use("/", require("./routes/recruiterRoutes"));
 app.use("/", require("./routes/authRoutes"));
