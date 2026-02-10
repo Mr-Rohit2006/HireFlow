@@ -1,6 +1,6 @@
 const Job = require("../models/Job");
 const Application = require("../models/Application");
-const sendMail = require("../utils/sendMail");
+const sendMail = require("../utils/sendmail");
 exports.viewApplicants = async (req, res) => {
   const recruiterId = req.session.user._id;
   const jobId = req.params.jobId;
