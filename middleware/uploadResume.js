@@ -4,7 +4,7 @@ const fs = require("fs");
 
 const uploadPath = path.join(__dirname, "..", "uploads", "resumes");
 
-// 🔥 Ensure folder exists (important for Render)
+// 🔥 Render ke liye mandatory
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
@@ -14,8 +14,7 @@ const storage = multer.diskStorage({
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
-    const uniqueName =
-      Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, uniqueName + path.extname(file.originalname));
   },
 });
@@ -28,10 +27,4 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-module.exports = multer({
-  storage,
-  fileFilter,
-  limits: {
-    fileSize: 5 * 1024 * 1024, // 5 MB limit (recommended)
-  },
-});
+module.exports = multer({ storage, fileFilter });
