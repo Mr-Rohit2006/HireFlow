@@ -49,15 +49,14 @@
         <p><%= job.description %></p>
       </div>
 
-<form 
-  action="/apply/<%= job._id %>" 
-  method="POST" 
+<form
+  action="/apply/<%= job._id %>"
+  method="POST"
   enctype="multipart/form-data"
 >
-  <input type="file" name="resume" accept=".pdf" required>
-  <button type="submit">Apply</button>
-</form>    </div>
-  <% }) %>
+  <input type="file" name="resume" accept=".pdf" required />
+  <button type="submit">Apply Job</button>
+</form>
 </div>
 
 <br>
