@@ -1,43 +1,49 @@
 const express = require("express");
 const session = require("express-session");
 require("dotenv").config();
-app.set("trust proxy", 1);
 
 const connectDB = require("./config/db");
-connectDB(); 
-const app = express();
 
+const app = express(); // ✅ app sabse pehle
+
+// 🔥 Render ke liye important
+app.set("trust proxy", 1);
+
+// DB
+connectDB();
+
+// View engine
 app.set("view engine", "ejs");
+
+// Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
 
-app.use(session({
-  secret: "secret123",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-  secure: false
-  }
+// Session
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "secret123",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, // ✅ Render free plan
+    },
+  })
+);
 
-}));
-app.use("/", require("./routes/recruiterRoutes"));
+// Routes
 app.use("/", require("./routes/authRoutes"));
+app.use("/", require("./routes/recruiterRoutes"));
 app.use("/", require("./routes/jobRoutes"));
 app.use("/", require("./routes/studentRoutes"));
 app.use("/", require("./routes/applicationRoutes"));
 
-const isAuth = require("./middleware/isAuth");
-
-app.get("/dashboard", isAuth, (req, res) => {
-  res.render("dashboard", { user: req.session.user });
-});
-// console.log(process.env.MAIL_USER);
-// console.log(process.env.MAIL_PASS);
-router.get("/login", (req, res) => {
-  res.render("login"); // login.ejs hona chahiye
+// Test root route (IMPORTANT)
+app.get("/", (req, res) => {
+  res.send("HireFlow server is running 🚀");
 });
 
+// Port
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("Server running"));
-
+app.listen(PORT, () => console.log("Server running on port " + PORT));
