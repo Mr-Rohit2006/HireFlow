@@ -34,6 +34,9 @@ app.get("/dashboard", isAuth, (req, res) => {
 });
 // console.log(process.env.MAIL_USER);
 // console.log(process.env.MAIL_PASS);
+router.get("/login", (req, res) => {
+  res.render("login"); // login.ejs hona chahiye
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log("Server running"));
